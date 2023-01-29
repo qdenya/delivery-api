@@ -8,9 +8,6 @@ import router from './routes/routes.js';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyB0jfoBdTC-SBSWKt48NM16DPl-E0SeV-w",
   authDomain: "delivery-pracownia.firebaseapp.com",
@@ -23,35 +20,22 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
-//const analytics = getAnalytics(app);
 
-//const bodyParser = require('body-parser');
-//const express = require('express');
+
+const analytics = isSupported().then(yes => yes ? getAnalytics(app) : null);
+
 const port = 3002; 
 const application = express();
 
 application.use(bodyParser.json());
-// application.use(bodyParser.urlencoded({
-//     extended: true,
-// }));
 application.use(express.raw());
 
-application.use(function (req, res, next) { 
-  // Website you wish to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  // Request methods you wish to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  // Request headers you wish to allow
-  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  // Set to true if you need the website to include cookies in the requests sent
-  // to the API (e.g. in case you use sessions)
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  // Pass to next layer of middleware
+application.use((req, res, next) => {
+  res.append('Access-Control-Allow-Origin', ['*']);
+  res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.append('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
-
-
 
 router(application);
 
