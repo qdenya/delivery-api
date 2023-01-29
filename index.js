@@ -41,5 +41,5 @@ router(application);
 
 const server = application.listen(port, (error) => {
     if(error) return console.log(error);
-    console.log(server.address().port);
+    console.log("Server is ready on " + server.address().port + " port.");
 });
